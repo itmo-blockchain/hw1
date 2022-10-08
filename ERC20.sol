@@ -39,6 +39,12 @@ contract ERC20 is Context, IERC20 {
     string private _name;
     string private _symbol;
 
+    modifier validateDate {
+        uint day = (block.timestamp / 1 days + 3) % 7 + 1;
+        require(day != 6, "ERC20: You can't transfer on Saturday");
+        _;
+    }
+
     /**
      * @dev Sets the values for {name} and {symbol}.
      *
@@ -205,7 +211,7 @@ contract ERC20 is Context, IERC20 {
      * - `recipient` cannot be the zero address.
      * - `sender` must have a balance of at least `amount`.
      */
-    function _transfer(address sender, address recipient, uint256 amount) internal virtual {
+    function _transfer(address sender, address recipient, uint256 amount) internal validateDate virtual {
         require(sender != address(0), "ERC20: transfer from the zero address");
         require(recipient != address(0), "ERC20: transfer to the zero address");
 
