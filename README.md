@@ -28,6 +28,13 @@ index 5a3717d..e29292b 100644
      function()
          payable
 @@ -289,6 +295,7 @@ contract MultiSigWallet {
+     function addTransaction(address destination, uint value, bytes data)
+         internal
+         notNull(destination)
++        validTransaction(value)
+         returns (uint transactionId)
+     {
+         transactionId = transactionCount;
 ```
 
 ## Task 2
